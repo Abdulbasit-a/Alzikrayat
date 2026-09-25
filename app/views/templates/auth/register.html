@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>إنشاء حساب جديد | الذكريات</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        body {
+            font-family: "Cairo", sans-serif;
+            background-color: #fdfbf7;
+            color: #1f2937;
+        }
+
+        .font-amiri {
+            font-family: "Amiri", serif;
+        }
+
+        .brand-color {
+            color: #d97706;
+        }
+
+        .btn-memory {
+            background-color: #d97706;
+            color: #fff;
+        }
+
+        .btn-memory:hover {
+            background-color: #b45309;
+            color: #fff;
+        }
+
+        .register-card {
+            max-width: 500px;
+            border: 0;
+            border-radius: 24px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(117deg, #d97706, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .form-control {
+            background-color: #f9fafb;
+            border-color: #e5e7eb;
+            padding: 12px;
+        }
+
+        .form-control:focus {
+            border-color: #d97706;
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.12);
+        }
+
+        .footer-link {
+            color: #4b5563;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="min-vh-100 d-flex flex-column">
+
+<!-- Navbar -->
+<header class="bg-white border-bottom">
+    <nav class="navbar bg-white border-bottom shadow-sm py-3">
+
+        <div class="container">
+
+            <div class="d-flex align-items-center justify-content-between w-100">
+
+                <!-- Logo -->
+
+                <a
+                    href="/"
+                    class="navbar-brand d-flex align-items-center gap-2 text-decoration-none"
+                >
+
+                <span
+                        class="d-flex align-items-center justify-content-center rounded-3"
+                        style="
+                            width: 36px;
+                            height: 36px;
+                            background: linear-gradient(
+                                117deg,
+                                #d97706 0%,
+                                #ec4899 100%
+                            );
+                        "
+                    >
+
+                        <img
+                            src="{{ url_for('static', filename='img/vector.svg') }}"
+                            alt="الذكريات"
+                            style="width: 20px; height: 20px;"
+                        >
+
+                    </span>
+
+                    <span
+                        class="fs-3 fw-bold"
+                        style="
+                            font-family: 'Amiri', serif;
+                            color: #d97706;
+                        "
+                    >
+                        الذكريات
+                    </span>
+
+                    
+
+                </a>
+
+
+                <!-- Navigation Buttons -->
+
+                <div class="d-flex align-items-center gap-2">
+
+                    <a
+                        href="/login"
+                        class="btn btn-outline-secondary btn-sm px-3 rounded-2 fw-semibold"
+                    >
+                        تسجيل الدخول
+                    </a>
+
+                    <a
+                        href="/register"
+                        class="btn btn-sm px-3 rounded-2 text-white fw-semibold"
+                        style="background-color: #d97706;"
+                    >
+                        حساب جديد
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+</header>
+
+
+<!-- Main -->
+<main class="flex-grow-1 d-flex align-items-center justify-content-center px-3 py-5">
+
+    <section class="card register-card w-100 p-4 p-md-5">
+
+        <div class="text-center mb-4">
+
+            <h1 class="font-amiri fs-1 mb-2">
+                إنشاء حساب جديد
+            </h1>
+
+            <p class="text-secondary mb-0">
+                انضم إلينا وابدأ بتدوين لحظاتك ومشاركتها
+            </p>
+
+        </div>
+
+
+        <!-- Errors -->
+        <!-- {% if errors %}
+            <div class="alert alert-danger text-end" role="alert">
+                <ul class="mb-0">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %} -->
+        {% if errors %}
+        <div class="alert alert-danger text-end" role="alert">
+            <ul class="mb-0">
+                {% for field, error in errors.items() %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+
+        <!-- Register Form -->
+        <form method="post" action="/register">
+
+            <div class="row g-3 mb-3">
+
+                <div class="col-md-6">
+                    <label for="first-name"
+                           class="form-label fw-semibold">
+                        الاسم الأول
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="first-name"
+                        name="first_name"
+                        value="{{ old.first_name if old else '' }}"
+                        autocomplete="given-name"
+                        required
+                    >
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="last-name"
+                           class="form-label fw-semibold">
+                        الاسم الأخير
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="last-name"
+                        name="last_name"
+                        value="{{ old.last_name if old else '' }}"
+                        autocomplete="family-name"
+                        required
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label for="email"
+                       class="form-label fw-semibold">
+                    البريد الإلكتروني
+                </label>
+
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    value="{{ old.email if old else '' }}"
+                    placeholder="example@mail.com"
+                    autocomplete="email"
+                    inputmode="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="mb-4">
+
+                <label for="password"
+                       class="form-label fw-semibold">
+                    كلمة المرور
+                </label>
+
+                <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    placeholder="••••••••••••"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                >
+
+                <div class="form-text">
+                    يجب أن تكون كلمة المرور 8 أحرف على الأقل.
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-memory w-100 py-2 fw-bold">
+                تسجيل
+            </button>
+
+        </form>
+
+
+        <p class="text-center mt-4 mb-0 text-secondary">
+
+            لديك حساب بالفعل؟
+
+            <a href="/login"
+               class="brand-color fw-bold text-decoration-none">
+                سجل دخولك من هنا
+            </a>
+
+        </p>
+
+    </section>
+
+</main>
+
+
+<!-- Footer -->
+<footer class="bg-white border-top py-4">
+
+    <div class="container-fluid px-4 px-lg-5">
+
+        <div class="d-flex flex-column flex-md-row
+                    justify-content-between align-items-center gap-3">
+
+            <small class="text-secondary text-center">
+                © ٢٠٢٦ منصة الذكريات.
+                جميع الحقوق محفوظة لتوثيق اللحظات الجميلة.
+            </small>
+
+            <nav class="d-flex flex-wrap justify-content-center gap-3">
+
+                <a href="/terms" class="footer-link small">
+                    الشروط والأحكام
+                </a>
+
+                <a href="/privacy" class="footer-link small">
+                    سياسة الخصوصية
+                </a>
+
+                <a href="/contact" class="footer-link small">
+                    تواصل معنا
+                </a>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>
